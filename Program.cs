@@ -1,21 +1,29 @@
-﻿// See https://aka.ms/new-console-template for more information
+// See https://aka.ms/new-console-template for more information
 
 using System;
-
-class PemrosesData
+class SimpleDataBase<T>
 {
-    public static T DapatkanNilaiTerbesar<T>(T a, T b, T c)
+    private List<T> storedData;
+    private List<DateTime> inputDate;
+
+    public SimpleDataBase()
     {
-        dynamic max = (dynamic)a;
-        if (max < b)
+        storedData = new List<T>();
+        inputDate = new List<DateTime>();
+    }
+
+    public void AddNewData(T data)
+    {
+        storedData.Add(data);
+        inputDate.Add(DateTime.Now);
+    }
+
+    public void PrintAllData()
+    {
+        for (int i = 0; i < storedData.Count; i++)
         {
-            max = b;
+            Console.WriteLine("Data " + (i+1) + " berisi " + storedData[i] + " yang disimpan pada waktu UTC: " + inputDate[i]);
         }
-        if (max < c)
-        {
-            max = c;
-        }
-        return max;
     }
 }
 
@@ -23,6 +31,10 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("Nilai terbesar dari 1.0, 3.0, 2.2 adalah " + PemrosesData.DapatkanNilaiTerbesar(1.0, 3.0, 2.2));
+        SimpleDataBase<int> db = new SimpleDataBase<int>();
+        db.AddNewData(10);
+        db.AddNewData(30);
+        db.AddNewData(22);
+        db.PrintAllData();
     }
 }
